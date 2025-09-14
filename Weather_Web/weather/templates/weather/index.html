@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Weather App</title>
+  <link rel="stylesheet" href="{% static 'weather/style.css' %}">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+  <div class="container">
+    <h1>🌤️ Weather App</h1>
+
+    <form method="GET" action="{% url 'weather' %}" id="weather-form">
+      <input type="text" name="city" placeholder="Enter city name" id="city-input" required>
+      <button type="submit">Check Weather</button>
+    </form>
+
+    <div id="loader" class="loader" style="display: none;"></div>
+
+    {% if weather_data %}
+    <div class="weather-results fade-in">
+      <h2>Weather in {{ weather_data.city }}</h2>
+      <p><strong>🌡️ Temperature:</strong> {{ weather_data.temperature }}°F</p>
+      <p><strong>🌥️ Condition:</strong> {{ weather_data.description }}</p>
+      <p><strong>💧 Humidity:</strong> {{ weather_data.humidity }}%</p>
+      <p><strong>🌬️ Wind:</strong> {{ weather_data.wind_speed }} km/h</p>
+    </div>
+    {% elif error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+  </div>
+
+  <script src="{% static 'weather/script.js' %}"></script>
+</body>
+
+</html>
